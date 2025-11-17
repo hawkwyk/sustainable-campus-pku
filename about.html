@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - 可持续校园实践</title>
+    <link rel="icon" type="image/png" href="resources/logo.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-green: #2D5A27;
+            --secondary-green: #4A7C59;
+            --light-green: #8FBC8F;
+            --earth-brown: #8B7355;
+            --sky-blue: #6B9BD2;
+            --warm-orange: #D2691E;
+            --dark-gray: #2C3E50;
+            --medium-gray: #7F8C8D;
+            --light-gray: #ECF0F1;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--light-green) 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .team-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(45, 90, 39, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(45, 90, 39, 0.15);
+        }
+        
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            border-left: 4px solid var(--primary-green);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 10px 30px rgba(45, 90, 39, 0.1);
+        }
+        
+        .contact-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(45, 90, 39, 0.1);
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .qr-code {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 团队成员颜色主题 */
+        .team-green { border-top: 4px solid #10b981; }
+        .team-blue { border-top: 4px solid #3b82f6; }
+        .team-orange { border-top: 4px solid #f59e0b; }
+        .team-purple { border-top: 4px solid #8b5cf6; }
+        
+        /* 时间线颜色 */
+        .timeline-green { border-left-color: #10b981; }
+        .timeline-blue { border-left-color: #3b82f6; }
+        .timeline-orange { border-left-color: #f59e0b; }
+        .timeline-purple { border-left-color: #8b5cf6; }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .timeline-item {
+                margin-left: 0;
+                border-left: none;
+                border-top: 4px solid var(--primary-green);
+            }
+            
+            .timeline-item:hover {
+                transform: translateY(-8px);
+            }
+        }
+        
+        /* 加载动画 */
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.1);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        /* 按钮样式 */
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-green), var(--secondary-green));
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 90, 39, 0.3);
+        }
+        
+        /* 统计数字动画 */
+        .stat-number {
+            font-family: 'Noto Serif SC', serif;
+            color: var(--primary-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <img src="resources/logo.png" alt="Logo" class="h-10 w-10">
+                    <span class="text-xl font-bold text-gray-800">可持续校园实践</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">主页</a>
+                    <a href="projects.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">项目故事</a>
+                    <a href="tour.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">校园地图</a>
+                    <a href="about.html" class="text-gray-800 hover:text-green-600 font-medium transition-colors">关于我们</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-800">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 text-gray-600 hover:text-gray-800">主页</a>
+                    <a href="projects.html" class="block px-3 py-2 text-gray-600 hover:text-gray-800">项目故事</a>
+                    <a href="tour.html" class="block px-3 py-2 text-gray-600 hover:text-gray-800">校园地图</a>
+                    <a href="about.html" class="block px-3 py-2 text-gray-800 font-medium">关于我们</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-r from-green-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center scroll-reveal">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">关于我们</h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    了解北京大学可持续校园实践课程的发展历程、团队成员以及我们的使命与愿景
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="scroll-reveal">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">我们的使命</h2>
+                    <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                        北京大学可持续校园实践课程致力于培养学生的环保意识和可持续发展能力，通过实践项目推动校园绿色转型，为建设生态文明社会贡献力量。
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                                <svg class="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">培养环保意识</h3>
+                                <p class="text-gray-600">通过实践活动提升师生的环境保护意识和责任感</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                                <svg class="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">推动绿色校园</h3>
+                                <p class="text-gray-600">实施可持续发展项目，建设环境友好型校园</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0 w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                                <svg class="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">创新实践教育</h3>
+                                <p class="text-gray-600">探索可持续发展教育的新模式和新方法</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll-reveal">
+                    <img src="resources/hero-bg.jpg" alt="可持续校园" class="rounded-xl shadow-lg w-full h-96 object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">项目成果</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    数据见证我们的成长与影响力
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">4</div>
+                    <div class="text-gray-600 font-medium">发展年份</div>
+                    <div class="text-sm text-gray-500 mt-1">从创立到现在</div>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">200+</div>
+                    <div class="text-gray-600 font-medium">参与师生</div>
+                    <div class="text-sm text-gray-500 mt-1">来自不同专业背景</div>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">12</div>
+                    <div class="text-gray-600 font-medium">实践项目</div>
+                    <div class="text-sm text-gray-500 mt-1">覆盖校园各个领域</div>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">5</div>
+                    <div class="text-gray-600 font-medium">获奖项目</div>
+                    <div class="text-sm text-gray-500 mt-1">校级、省级荣誉</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">发展历程</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    从一个小小的想法到全面的可持续发展课程体系，我们的成长历程
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div id="timeline-container" class="space-y-8">
+                    <!-- Timeline items will be dynamically loaded -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">团队成员</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    我们是一支充满激情和创新精神的团队，来自不同专业背景，共同为可持续发展教育而努力
+                </p>
+            </div>
+            
+            <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Team cards will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">联系我们</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    欢迎与我们交流可持续发展教育经验，共同探讨绿色校园建设
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Information -->
+                <div class="space-y-8 scroll-reveal">
+                    <div class="contact-card rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">联系信息</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                <div>
+                                    <p class="font-medium text-gray-800">邮箱</p>
+                                    <p class="text-gray-600">3226213313@qq.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3">
+                                <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <div>
+                                    <p class="font-medium text-gray-800">地址</p>
+                                    <p class="text-gray-600">北京市海淀区北京大学环境科学与工程学院</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3">
+                                <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                </svg>
+                                <div>
+                                    <p class="font-medium text-gray-800">GitHub</p>
+                                    <p class="text-gray-600">
+                                        <a href="https://github.com/yourusername/sustainable-campus-pku" class="text-green-600 hover:text-green-700 transition-colors">
+                                            github.com/hawkwyk/sustainable-campus-pku
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- WeChat QR Code -->
+                    <div class="contact-card rounded-xl p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">微信公众号</h3>
+                        <div class="qr-code inline-block mb-4">
+                            <img src="resources/logo.png" alt="微信公众号二维码" class="w-32 h-32 mx-auto">
+                        </div>
+                        <p class="text-gray-600">扫码关注"可持续校园实践"，获取最新资讯</p>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="scroll-reveal">
+                    <div class="contact-card rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">发送消息</h3>
+                        <form id="contact-form" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="contact-name">姓名 *</label>
+                                    <input type="text" id="contact-name" name="name" required 
+                                           class="form-input" placeholder="请输入您的姓名">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="contact-email">邮箱 *</label>
+                                    <input type="email" id="contact-email" name="email" required 
+                                           class="form-input" placeholder="请输入您的邮箱">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="contact-subject">主题 *</label>
+                                <input type="text" id="contact-subject" name="subject" required 
+                                       class="form-input" placeholder="请输入消息主题">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="contact-message">消息内容 *</label>
+                                <textarea id="contact-message" name="message" rows="6" required 
+                                          class="form-input form-textarea" placeholder="请详细描述您的问题或建议..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full btn-primary text-white px-6 py-3 rounded-lg font-medium hover:shadow-lg transition-all">
+                                发送消息
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="resources/logo.png" alt="Logo" class="h-8 w-8">
+                        <span class="text-xl font-bold">可持续校园实践</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        北京大学可持续发展教育课程，致力于培养具有环保意识和创新能力的未来人才。
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">主页</a></li>
+                        <li><a href="projects.html" class="text-gray-400 hover:text-white transition-colors">项目故事</a></li>
+                        <li><a href="tour.html" class="text-gray-400 hover:text-white transition-colors">校园地图</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">联系我们</h3>
+                    <div class="text-sm text-gray-400 space-y-2">
+                        <p>邮箱: 3226213313@qq.com</p>
+                        <p>地址: 北京市海淀区北京大学</p>
+                        <p>微信公众号: 可持续校园实践</p>
+                        <p>GitHub: <a href="https://github.com/yourusername/sustainable-campus-pku" class="hover:text-white transition-colors">https://github.com/hawkwyk/sustainable-campus-pku</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2025 北京大学可持续校园实践课程. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTimeline();
+            loadTeam();
+            initializeScrollReveal();
+            initializeMobileMenu();
+            initializeContactForm();
+            initializeCounterAnimation();
+        });
+        
+        // Load timeline from config
+        function loadTimeline() {
+            const timelineContainer = document.getElementById('timeline-container');
+            const timeline = window.SITE_CONFIG.timeline;
+            
+            timelineContainer.innerHTML = '';
+            
+            timeline.forEach((item, index) => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = `timeline-item timeline-${item.color} rounded-lg p-6 scroll-reveal`;
+                
+                timelineItem.innerHTML = `
+                    <div class="flex items-center mb-3">
+                        <span class="bg-${item.color}-600 text-white px-3 py-1 rounded-full text-sm font-medium">${item.year}</span>
+                        <h3 class="text-xl font-bold text-gray-800 ml-4">${item.title}</h3>
+                    </div>
+                    <p class="text-gray-600 ml-20">${item.description}</p>
+                `;
+                
+                timelineContainer.appendChild(timelineItem);
+            });
+        }
+        
+        // Load team members from config
+        function loadTeam() {
+            const teamGrid = document.getElementById('team-grid');
+            const team = window.SITE_CONFIG.team;
+            
+            teamGrid.innerHTML = '';
+            
+            team.forEach((member, index) => {
+                const teamCard = document.createElement('div');
+                teamCard.className = `team-card team-${member.color} rounded-xl p-6 text-center scroll-reveal`;
+                
+                teamCard.innerHTML = `
+                    <img src="${member.image}" alt="${member.name}" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">${member.name}</h3>
+                    <p class="text-${member.color}-600 font-medium mb-3">${member.role}</p>
+                    <p class="text-sm text-gray-500 mb-3">${member.department}</p>
+                    <p class="text-gray-600 text-sm">${member.description}</p>
+                    ${member.email ? `<p class="text-xs text-gray-500 mt-3">${member.email}</p>` : ''}
+                `;
+                
+                teamGrid.appendChild(teamCard);
+            });
+        }
+        
+        // Initialize contact form
+        function initializeContactForm() {
+            const form = document.getElementById('contact-form');
+            
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                
+                // Show loading state
+                submitBtn.textContent = '发送中...';
+                submitBtn.disabled = true;
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    // Show success message
+                    if (window.SustainableCampus) {
+                        window.SustainableCampus.showNotification('消息发送成功！我们会尽快回复您。', 'success');
+                    }
+                    
+                    // Reset form
+                    form.reset();
+                    
+                    // Reset button
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            });
+        }
+        
+        // Counter animation
+        function initializeCounterAnimation() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const finalValue = parseInt(target.textContent.replace(/\D/g, ''));
+                        const suffix = target.textContent.replace(/[\d]/g, '');
+                        
+                        anime({
+                            targets: { value: 0 },
+                            value: finalValue,
+                            duration: 2000,
+                            easing: 'easeOutQuad',
+                            update: function(anim) {
+                                target.textContent = Math.round(anim.animatables[0].target.value) + suffix;
+                            }
+                        });
+                        
+                        observer.unobserve(target);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+        
+        // Scroll reveal animation
+        function initializeScrollReveal() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Mobile menu toggle
+        function initializeMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        }
+    </script>
+</body>
+</html>

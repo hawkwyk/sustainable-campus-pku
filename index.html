@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可持续校园实践 - 北京大学</title>
+    <link rel="icon" type="image/png" href="resources/logo.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-green: #2D5A27;
+            --secondary-green: #4A7C59;
+            --light-green: #8FBC8F;
+            --earth-brown: #8B7355;
+            --sky-blue: #6B9BD2;
+            --warm-orange: #D2691E;
+            --dark-gray: #2C3E50;
+            --medium-gray: #7F8C8D;
+            --light-gray: #ECF0F1;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--light-green) 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        
+        .hero-title {
+            font-family: 'Noto Serif SC', serif;
+            color: rgb(6, 137, 56);
+            /* background: linear-gradient(45deg, var(--primary-green), var(--secondary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text; */
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(45, 90, 39, 0.15);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-green), var(--secondary-green));
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 90, 39, 0.3);
+        }
+        
+        .stat-number {
+            font-family: 'Noto Serif SC', serif;
+            color: var(--primary-green);
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(45, 90, 39, 0.1);
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .hero-bg {
+            background-image: url('resources/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(45deg, var(--primary-green), var(--warm-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero-bg {
+                background-attachment: scroll;
+            }
+        }
+        
+        /* 加载动画 */
+        .loading-spinner {
+            border: 3px solid rgba(45, 90, 39, 0.1);
+            border-top: 3px solid var(--primary-green);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-green);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <img src="resources/logo.png" alt="Logo" class="h-10 w-10">
+                    <span class="text-xl font-bold text-gray-800">可持续校园实践</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-800 hover:text-green-600 font-medium transition-colors">主页</a>
+                    <a href="projects.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">项目故事</a>
+                    <a href="tour.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">校园地图</a>
+                    <a href="about.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">关于我们</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-800">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 text-gray-800 font-medium">主页</a>
+                    <a href="projects.html" class="block px-3 py-2 text-gray-600 hover:text-gray-800">项目故事</a>
+                    <a href="tour.html" class="block px-3 py-2 text-gray-600 hover:text-gray-800">校园地图</a>
+                    <a href="about.html" class="block px-3 py-2 text-gray-600 hover:text-gray-800">关于我们</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+        <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 hero-title text-white">
+                北京大学
+                <span class="block text-3xl md:text-5xl mt-2">可持续校园实践</span>
+            </h1>
+            <p class="text-lg md:text-xl mb-8 leading-relaxed opacity-90">
+                构建绿色校园，培养环保意识，推动可持续发展教育
+                <br>让每一位师生都成为可持续发展的实践者和传播者
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="projects.html" class="btn-primary text-white px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center">
+                    探索项目
+                    <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </a>
+                <a href="tour.html" class="bg-white text-gray-800 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors inline-flex items-center justify-center">
+                    校园地图
+                    <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">课程成果</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    通过实践项目推动校园可持续发展，培养学生的环保意识和创新能力
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">12+</div>
+                    <div class="text-gray-600 font-medium">实践项目</div>
+                    <div class="text-sm text-gray-500 mt-1">覆盖校园各个领域</div>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">200+</div>
+                    <div class="text-gray-600 font-medium">参与学生</div>
+                    <div class="text-sm text-gray-500 mt-1">来自不同院系专业</div>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">5</div>
+                    <div class="text-gray-600 font-medium">获奖项目</div>
+                    <div class="text-sm text-gray-500 mt-1">校级、省级荣誉</div>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">3</div>
+                    <div class="text-gray-600 font-medium">合作伙伴</div>
+                    <div class="text-sm text-gray-500 mt-1">企业、政府、NGO</div>
+                </div>
+            </div>
+            
+            <!-- Data Visualization -->
+            <div class="mt-16 scroll-reveal">
+                <div id="stats-chart" class="h-96 bg-white rounded-lg shadow-lg p-6"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">特色项目</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    探索我们最具创新性和影响力的可持续发展项目
+                </p>
+            </div>
+            
+            <div class="splide" id="projects-carousel">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="project-card rounded-xl p-6 h-full">
+                                <img src="resources/project-weixiu.jpg" alt="蔚秀园改造" class="w-full h-48 object-cover rounded-lg mb-4">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">蔚秀园改造</h3>
+                                <p class="text-gray-600 mb-4">通过生态设计和可持续景观改造，将蔚秀园打造成为一个绿色学习和休闲空间。</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-green-600 font-medium">生态景观</span>
+                                    <a href="projects.html#weixiu" class="text-green-600 hover:text-green-700 font-medium">了解更多 →</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="project-card rounded-xl p-6 h-full">
+                                <img src="resources/project-nongyuan.jpg" alt="农园食堂改造" class="w-full h-48 object-cover rounded-lg mb-4">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">农园食堂改造</h3>
+                                <p class="text-gray-600 mb-4">推动绿色餐饮理念，减少食物浪费，建立可持续的校园餐饮系统。</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-green-600 font-medium">绿色餐饮</span>
+                                    <a href="projects.html#nongyuan" class="text-green-600 hover:text-green-700 font-medium">了解更多 →</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="project-card rounded-xl p-6 h-full">
+                                <img src="resources/project-bird.jpg" alt="防鸟撞设施改造" class="w-full h-48 object-cover rounded-lg mb-4">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">防鸟撞设施改造</h3>
+                                <p class="text-gray-600 mb-4">保护校园鸟类，通过科学设计减少鸟类与建筑物的碰撞。</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-green-600 font-medium">生物多样性</span>
+                                    <a href="projects.html#bird" class="text-green-600 hover:text-green-700 font-medium">了解更多 →</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="project-card rounded-xl p-6 h-full">
+                                <img src="resources/project-enzyme.jpg" alt="酵素应用" class="w-full h-48 object-cover rounded-lg mb-4">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">酵素应用</h3>
+                                <p class="text-gray-600 mb-4">利用有机废料制作环保酵素，推广天然清洁用品的使用。</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-green-600 font-medium">资源循环</span>
+                                    <a href="projects.html#enzyme" class="text-green-600 hover:text-green-700 font-medium">了解更多 →</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-16 bg-gradient-to-r from-green-600 to-green-700 text-white">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 scroll-reveal">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">加入我们的可持续发展行动</h2>
+            <p class="text-lg md:text-xl mb-8 opacity-90">
+                无论你是学生、教师还是校园工作人员，都可以为创建更绿色的校园贡献力量
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="about.html" class="bg-white text-green-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors inline-flex items-center justify-center">
+                    联系我们
+                    <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </a>
+                <a href="tour.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-green-600 transition-colors inline-flex items-center justify-center">
+                    探索校园
+                    <svg class="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="resources/logo.png" alt="Logo" class="h-8 w-8">
+                        <span class="text-xl font-bold">可持续校园实践</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        北京大学可持续发展教育课程，致力于培养具有环保意识和创新能力的未来人才。
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="projects.html" class="text-gray-400 hover:text-white transition-colors">项目故事</a></li>
+                        <li><a href="tour.html" class="text-gray-400 hover:text-white transition-colors">校园地图</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">关于我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">联系我们</h3>
+                    <div class="text-sm text-gray-400 space-y-2">
+                        <p>邮箱: 3226213313@qq.com</p>
+                        <p>地址: 北京市海淀区北京大学</p>
+                        <p>微信公众号: 可持续校园实践</p>
+                        <p>GitHub: <a href="https://github.com/yourusername/sustainable-campus-pku" class="hover:text-white transition-colors">https://github.com/hawkwyk/sustainable-campus-pku</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2025 北京大学可持续校园实践课程. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize carousel
+            if (document.querySelector('#projects-carousel')) {
+                new Splide('#projects-carousel', {
+                    type: 'loop',
+                    perPage: 3,
+                    perMove: 1,
+                    gap: '2rem',
+                    autoplay: true,
+                    interval: 4000,
+                    pauseOnHover: true,
+                    breakpoints: {
+                        768: {
+                            perPage: 1,
+                        },
+                        1024: {
+                            perPage: 2,
+                        }
+                    }
+                }).mount();
+            }
+            
+            // Initialize chart
+            initializeStatsChart();
+            
+            // Initialize scroll reveal
+            initializeScrollReveal();
+            
+            // Initialize mobile menu
+            initializeMobileMenu();
+            
+            // Show welcome message
+            setTimeout(() => {
+                if (window.SustainableCampus) {
+                    window.SustainableCampus.showNotification('欢迎来到北京大学可持续校园实践网站！', 'success');
+                }
+            }, 2000);
+        });
+        
+        // Statistics Chart
+        function initializeStatsChart() {
+            const chartDom = document.getElementById('stats-chart');
+            if (!chartDom) return;
+            
+            const myChart = echarts.init(chartDom);
+            
+            const option = {
+                title: {
+                    text: '项目成果统计',
+                    left: 'center',
+                    textStyle: {
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        color: '#2C3E50'
+                    }
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                legend: {
+                    data: ['项目数量', '参与人数', '影响范围'],
+                    bottom: 10
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '15%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['2022年', '2023年', '2024年', '2025年']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: '项目数量',
+                        type: 'bar',
+                        data: [3, 6, 9, 12],
+                        itemStyle: {
+                            color: '#2D5A27'
+                        }
+                    },
+                    {
+                        name: '参与人数',
+                        type: 'bar',
+                        data: [50, 100, 150, 200],
+                        itemStyle: {
+                            color: '#4A7C59'
+                        }
+                    },
+                    {
+                        name: '影响范围',
+                        type: 'line',
+                        data: [20, 40, 65, 85],
+                        itemStyle: {
+                            color: '#D2691E'
+                        }
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+            
+            // Responsive chart
+            window.addEventListener('resize', function() {
+                myChart.resize();
+            });
+        }
+        
+        // Scroll reveal animation
+        function initializeScrollReveal() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Mobile menu toggle
+        function initializeMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
