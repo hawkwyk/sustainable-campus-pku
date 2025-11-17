@@ -537,9 +537,30 @@
             const mobileMenu = document.getElementById('mobile-menu');
             
             if (mobileMenuBtn && mobileMenu) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    mobileMenu.classList.toggle('hidden');
-                });
+                // 确保移除可能存在的重复监听
+                mobileMenuBtn.removeEventListener('click', toggleMenu);
+                mobileMenuBtn.addEventListener('click', toggleMenu);
+            }
+            
+            function toggleMenu() {
+                // 直接切换菜单显示状态
+                if (mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.remove('hidden');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                }
+                
+                // 同时切换按钮图标（可选增强）
+                const svgPath = mobileMenuBtn.querySelector('svg path');
+                if (svgPath) {
+                    if (mobileMenu.classList.contains('hidden')) {
+                        // 恢复为菜单图标
+                        svgPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                    } else {
+                        // 切换为关闭图标
+                        svgPath.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                    }
+                }
             }
         }
     </script>
