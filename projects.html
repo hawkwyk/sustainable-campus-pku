@@ -586,32 +586,25 @@
                 return;
             }
             
-            // 强制移除所有可能的事件监听
-            const newMobileMenuBtn = mobileMenuBtn.cloneNode(true);
-            mobileMenuBtn.parentNode.replaceChild(newMobileMenuBtn, mobileMenuBtn);
-            
-            // 重新获取元素引用
-            const updatedMobileMenuBtn = document.getElementById('mobile-menu-btn');
-            
-            // 绑定点击事件（使用箭头函数确保this指向正确）
-            updatedMobileMenuBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // 阻止事件冒泡
-                // 强制切换菜单显示状态
-                if (mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.remove('hidden');
-                    mobileMenu.style.display = 'block'; // 强制显示
-                } else {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenu.style.display = 'none'; // 强制隐藏
-                }
+            // 简化实现，直接绑定点击事件
+            mobileMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // 直接切换显示状态
+                mobileMenu.classList.toggle('hidden');
             });
             
-            // 额外添加触摸事件支持（针对移动设备）
-            updatedMobileMenuBtn.addEventListener('touchstart', (e) => {
+            // 添加触摸事件支持
+            mobileMenuBtn.addEventListener('touchstart', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 mobileMenu.classList.toggle('hidden');
-                mobileMenu.style.display = mobileMenu.classList.contains('hidden') ? 'none' : 'block';
+            });
+            
+            // 点击页面其他区域关闭菜单
+            document.addEventListener('click', function(e) {
+                if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
             });
         }
 
