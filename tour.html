@@ -1109,14 +1109,42 @@
         
         // Mobile menu toggle
         function initializeMobileMenu() {
+            // 确保DOM元素存在
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             
-            if (mobileMenuBtn && mobileMenu) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    mobileMenu.classList.toggle('hidden');
-                });
+            if (!mobileMenuBtn || !mobileMenu) {
+                console.error('移动菜单元素未找到');
+                return;
             }
+            
+            // 强制移除所有可能的事件监听
+            const newMobileMenuBtn = mobileMenuBtn.cloneNode(true);
+            mobileMenuBtn.parentNode.replaceChild(newMobileMenuBtn, mobileMenuBtn);
+            
+            // 重新获取元素引用
+            const updatedMobileMenuBtn = document.getElementById('mobile-menu-btn');
+            
+            // 绑定点击事件（使用箭头函数确保this指向正确）
+            updatedMobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // 阻止事件冒泡
+                // 强制切换菜单显示状态
+                if (mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.remove('hidden');
+                    mobileMenu.style.display = 'block'; // 强制显示
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.style.display = 'none'; // 强制隐藏
+                }
+            });
+            
+            // 额外添加触摸事件支持（针对移动设备）
+            updatedMobileMenuBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.style.display = mobileMenu.classList.contains('hidden') ? 'none' : 'block';
+            });
         }
         
         // Close modal when clicking outside
