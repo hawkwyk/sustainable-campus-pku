@@ -55,8 +55,8 @@ const CONFIG = {
         statistics: [
             { number: '12+', label: '实践项目', description: '覆盖校园各个领域' },
             { number: '200+', label: '参与学生', description: '来自不同院系专业' },
-            { number: '5', label: '获奖项目', description: '校级、省级荣誉' },
-            { number: '3', label: '合作伙伴', description: '企业、政府、NGO' }
+            { number: '5', label: '获奖项目', description: '校级荣誉' },
+            { number: '4', label: '开课时间', description: '2022年-2025年' }
         ],
         
         featuredProjects: [
@@ -186,7 +186,7 @@ const CONFIG = {
             title: '酵素应用',
             category: '资源循环',
             year: '2025年',
-            participants: '7人',
+            participants: '6人',
             description: '我们酵素小组以“厨余变宝，绿色循环”为方向，用废弃果皮、红糖和水自制环保酵素，并延伸出两大应用：一是搭配植物起泡剂、无患子，制成天然洗手液和洗发水；二是探索出酵素对污水的辅助净化作用。项目既实现了果皮垃圾减量，又产出了实用的天然洗护产品，还验证了酵素的环保新价值，在校内推广了可持续生活的理念。',
             details: [
                 '设计理念：以“变废为宝，循环共生”为核心，融入可持续生活理念',
@@ -212,8 +212,8 @@ const CONFIG = {
             id: 'booth',
             title: '核酸亭改造',
             category: '创新利用',
-            year: '2024年',
-            participants: '15人',
+            year: '2025年',
+            participants: '8人',
             description: '核酸亭改造是北京大学可持续校园实践课程的重要成果之一。在每一期项目学生的共同努力下，废弃核酸亭已经转变成为能够满足学习、休憩、面试、社团活动等多种需求的多功能独立空间。展现了同学们变废为宝、造福学生的初心。',
             details: [
                 '设计理念：利用废弃核酸亭打造隐私性较好的独立空间供同学们实用，内部兼顾实用性和美观性。外部充分考虑核酸亭最终摆放位置，使之与周围环境相协调',
