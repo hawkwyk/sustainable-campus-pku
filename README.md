@@ -6,7 +6,7 @@
 
 ## 网站地址
 
-🌐 **访问网站**: https://kpq4ird5d44ou.ok.kimi.link
+🌐 **访问网站**: https://hawkwyk.github.io/sustainable-campus-pku
 
 ## 功能特色
 
